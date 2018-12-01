@@ -36,7 +36,7 @@ def cleanup_categoryid(df):
 
 def clean_item_data():
     #read in file using data_cleaner
-    df = dc.read_search_strings()
+    df = read_search_strings()
     
     '''
     removing . and all non-alphanumeric characters at the end of each word (e.g. 'oz.') 
@@ -63,12 +63,6 @@ def clean_item_data():
     return df
 
 
-
-'''
-Returns item_title at specified index (from 0 to 11121)
-'''
-def item_title(index):
-    return df.loc[index]['item_title']
 
 def data_split(df, train=0.65, valid=0.15, test=0.20):
     """
