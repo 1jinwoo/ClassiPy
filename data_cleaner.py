@@ -34,7 +34,7 @@ def cleanup_categoryid(df):
             df.at[j, 'categoryId'] = i
     return df
 
-def clean_item_data():
+def clean_item_data(m):
     #read in file using data_cleaner
     df = read_search_strings()
     
@@ -47,19 +47,24 @@ def clean_item_data():
     
     for index, row in df.iterrows():
         new_string = ''
-        for item in row['item_title']:
-            item = ''.join(c for c in item if c.isalnum() or c == '\"' or c == '\'' or c == ' ' or c == '.' or c == '$')
-            
-            new_string += item
-        word_list = new_string.split()
-        new_word = ''
-        for w in word_list:
-            if w.endswith('.'):
-                new_word += w[:-1] + ' '
-            else:
-                new_word += w + ' '
-        new_string = new_word
-        df.at[index, 'item_title']= new_string
+        if m == 1:
+            for item in row['item_title']:
+                item = ''.join(c for c in item if c.isalnum() or c == '\"' or c == '\'' or c == ' ' or c == '.' or c == '$')
+                new_string += item
+            word_list = new_string.split()
+            new_word = ''
+            for w in word_list:
+                if w.endswith('.'):
+                    new_word += w[:-1] + ' '
+                else:
+                    new_word += w + ' '
+            new_string = new_word
+            df.at[index, 'item_title']= new_string
+        elif m == 0:
+            for item in row['item_title']:
+                item = ''.join(c for c in item if c.isalpha() or c == ' ')
+                new_string += item
+            df.at[index, 'item_title'] = new_string
     return df
 
 
@@ -109,5 +114,4 @@ def data_split(df, train=0.65, valid=0.15, test=0.20):
 
 
 if __name__ == '__main__':
-    print(cleanup_categoryid())
-    df[100:200]
+    print(clean_item_data(0))
