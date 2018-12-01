@@ -29,9 +29,10 @@ X_test = vectorizer.transform(x_test_list)
 # Neural Network
 print('X train shape: ' + str(X_train.shape[1]))
 input_dim = X_train.shape[1] # Number of features
+output_dim = df['categoryId'].nunique()
 model = Sequential()
 model.add(layers.Dense(100, input_dim=input_dim, activation='relu'))
-model.add(layers.Dense(63, activation='softmax'))
+model.add(layers.Dense(output_dim, activation='softmax'))
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
