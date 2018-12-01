@@ -41,8 +41,8 @@ model = Sequential()
 model.add(layers.Embedding(input_dim=vocab_size,
                            output_dim=embedding_dim,
                            input_length=maxlen))
-# model.add(layers.LSTM(units=50))
-model.add(layers.GlobalMaxPool1D())
+model.add(layers.LSTM(units=50))
+# model.add(layers.GlobalMaxPool1D())
 model.add(layers.Dense(150, activation='relu'))
 model.add(layers.Dense(output_dim, activation='softmax'))
 model.compile(optimizer='adam',
