@@ -45,8 +45,8 @@ def item_title(index):
 
 # In[44]:
 
-
-df = clean_item_data()
-for n in range(11121):
-    print(n, item_title(n))
+if __name__ == '__main__':
+    df = clean_item_data()
+    for n in range(11121):
+        print(n, item_title(n))
 

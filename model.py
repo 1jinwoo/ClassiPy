@@ -1,8 +1,14 @@
+# libraries import
 from keras.models import Sequential
 from keras import layers
 import numpy as np
 from sklearn.model_selection import train_test_split
 from pandas import DataFrame
+
+# file import
+import item_title_cleaner as itc
+
+df = itc.clean_item_data()
 
 
 def data_split(df, train=0.65, valid=0.15, test=0.20):
@@ -32,13 +38,18 @@ def data_split(df, train=0.65, valid=0.15, test=0.20):
             train_test_split(x_category_df,y_category_df, test_size=test)
         x_category_train, x_category_valid, y_category_train, y_category_valid = \
             train_test_split(x_category_train_valid, y_category_train_valid, train_size=train/(train+valid))
-        X_train.append(x_category_train)
-        X_valid.append(x_category_valid)
-        X_test.append(x_category_test)
-        Y_train.append(y_category_train)
-        Y_train.append(x_category_valid)
-        Y_train.append(x_category_test)
+        X_train = X_train.append(x_category_train)
+        X_valid = X_valid.append(x_category_valid)
+        X_test = X_test.append(x_category_test)
+        Y_train = Y_train.append(y_category_train)
+        Y_valid = Y_valid.append(y_category_valid)
+        Y_test = Y_test.append(y_category_test)
 
     return X_train, X_valid, X_test, Y_train, Y_valid, Y_test
+
+
+print(data_split(df))
+
+
 
 

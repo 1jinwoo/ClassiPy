@@ -16,7 +16,7 @@ def read_search_strings(file_path='search_strings.csv'):
 
 read_search_strings()
 
-def cleanup_categoryid():
+def cleanup_categoryid(df):
     '''
     Assigns new category id starting from 1.
     ** This function modifies df **
@@ -34,5 +34,7 @@ def cleanup_categoryid():
             df.at[j, 'categoryId'] = i
     return category_dict
 
-print(cleanup_categoryid())
-df[100:200]
+
+if __name__ == '__main__':
+    print(cleanup_categoryid())
+    df[100:200]
