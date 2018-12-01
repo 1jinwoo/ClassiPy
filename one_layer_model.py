@@ -14,11 +14,11 @@ df = dc.cleanup_categoryid(df)
 _X_train, _, _X_test, Y_train, _, Y_test = dc.data_split(df, 0.8, 0, 0.2)
 vectorizer = CountVectorizer()
 
+# convert pandas dataframes to list of strings
 x_train_list = []
 x_test_list = []
 for _, row in _X_train.iterrows():
     x_train_list.append(row[0])
-
 for _, row in _X_test.iterrows():
     x_test_list.append(row[0])
 
@@ -36,12 +36,12 @@ model.add(layers.Dense(output_dim, activation='softmax'))
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
-print(model.summary())
 history = model.fit(X_train, Y_train,
                     epochs=4,
                     verbose=1,
                     validation_data=(X_test, Y_test),
-                    batch_size=50)
+                    batch_size=10)
+print(model.summary())
 
 loss, accuracy = model.evaluate(X_train, Y_train, verbose=False)
 print("Training Accuracy: {:.4f}".format(accuracy))
