@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+
 def read_search_strings(file_path='search_strings.csv'):
     '''
     Reads from csv from file_path
@@ -34,6 +35,45 @@ def cleanup_categoryid(df):
         else:
             df.at[j, 'categoryId'] = i
     return category_dict
+
+def clean_item_data():
+    #read in file using data_cleaner
+    df = dc.read_search_strings()
+    
+    '''
+    removing . and all non-alphanumeric characters at the end of each word (e.g. 'oz.') 
+    and preventing the removing of '7.5mm', except ", ', and space. 
+    Æ stays, might remove later
+    
+    '''
+    
+    for index, row in df.iterrows():
+        new_string = ''
+        for item in row['item_title']:
+            item = ''.join(c for c in item if c.isalnum() or c == '\"' or c == '\'' or c == ' ' or c == '.' or c == '$')
+            
+            new_string += item
+        word_list = new_string.split()
+        new_word = ''
+        for w in word_list:
+            if w.endswith('.'):
+                new_word += w[:-1] + ' '
+            else:
+                new_word += w + ' '
+        new_string = new_word
+        df.at[index, 'item_title']= new_string
+    return df
+
+
+# In[43]:
+
+
+'''
+Returns item_title at specified index (from 0 to 11121)
+'''
+def item_title(index):
+    return df.loc[index]['item_title']
+
 
 def data_split(df, train=0.65, valid=0.15, test=0.20):
     """
