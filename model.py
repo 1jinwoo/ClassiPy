@@ -18,7 +18,7 @@ vectorizer = CountVectorizer()
 X_train = vectorizer.fit_transform(_X_train)
 X_test = vectorizer.transform(_X_test)
 
-#
+# Neural Network
 input_dim = X_train.shape[1] # Number of features
 model = Sequential()
 model.add(layers.Dense(100, input_dim=input_dim, activation='relu'))
