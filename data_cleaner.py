@@ -22,7 +22,7 @@ def cleanup_categoryid(df):
     ** This function modifies df **
     :return: dictionary[key] = categroyId
     '''
-    i = 0
+    i = -1
     category_dict = dict()
     for j, row in df.iterrows():
         category = row[3]
@@ -90,14 +90,20 @@ def data_split(df, train=0.65, valid=0.15, test=0.20):
 
         x_category_train_valid, x_category_test, y_category_train_valid, y_category_test = \
             train_test_split(x_category_df, y_category_df, test_size=test)
-        x_category_train, x_category_valid, y_category_train, y_category_valid = \
-            train_test_split(x_category_train_valid, y_category_train_valid, train_size=train/(train+valid))
-        X_train = pd.concat([X_train, x_category_train], axis=0)
-        X_valid = pd.concat([X_valid, x_category_valid], axis=0)
-        X_test = pd.concat([X_test, x_category_test], axis=0)
-        Y_train = pd.concat([Y_train, y_category_train], axis=0)
-        Y_valid = pd.concat([Y_valid, y_category_valid], axis=0)
-        Y_test = pd.concat([Y_test, y_category_test], axis=0)
+        if valid != 0:
+            x_category_train, x_category_valid, y_category_train, y_category_valid = \
+                train_test_split(x_category_train_valid, y_category_train_valid, train_size=train/(train+valid))
+            X_train = pd.concat([X_train, x_category_train], axis=0)
+            X_valid = pd.concat([X_valid, x_category_valid], axis=0)
+            X_test = pd.concat([X_test, x_category_test], axis=0)
+            Y_train = pd.concat([Y_train, y_category_train], axis=0)
+            Y_valid = pd.concat([Y_valid, y_category_valid], axis=0)
+            Y_test = pd.concat([Y_test, y_category_test], axis=0)
+        else:
+            X_train = pd.concat([X_train, x_category_train_valid], axis=0)
+            X_test = pd.concat([X_test, x_category_test], axis=0)
+            Y_train = pd.concat([Y_train, y_category_train_valid], axis=0)
+            Y_test = pd.concat([Y_test, y_category_test], axis=0)
 
     return X_train, X_valid, X_test, Y_train, Y_valid, Y_test
 
