@@ -1,8 +1,8 @@
 # ClassiPy
 ## Features
-Takes search string as input and output category for the product that the search string is aimed to find.
+- Takes search string as input and output category for the product that the search string is aimed to find.
 
-## Dependence
+## Dependencies
 - NumPy
 - Pandas
 - TensorFlow
