@@ -62,8 +62,13 @@ def clean_item_data(m):
             df.at[index, 'item_title']= new_string
         elif m == 0:
             for item in row['item_title']:
-                item = ''.join(c for c in item if c.isalpha() or c == ' ')
+                item = ''.join(c.lower() for c in item if c.isalpha() or c == ' ')
                 new_string += item
+            word_list = new_string.split()
+            new_word = ''
+            for w in word_list:
+                new_word += w + ' '
+            new_string = new_word
             df.at[index, 'item_title'] = new_string
     return df
 
