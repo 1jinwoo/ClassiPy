@@ -9,8 +9,11 @@ import pandas as pd
 # file import
 import data_cleaner as dc
 
+df = dc.clean_item_data()
+df = dc.cleanup_categoryid(df)
+
 # vectorize training input data
-_X_train, _, _X_test, Y_train, _, Y_test = data_split(df, 0.8, 0, 0.2)
+_X_train, _, _X_test, Y_train, _, Y_test = dc.data_split(df, 0.8, 0, 0.2)
 vectorizer = CountVectorizer()
 X_train = vectorizer.fit_transform(_X_train)
 X_test = vectorizer.transform(_X_test)
@@ -34,12 +37,3 @@ loss, accuracy = model.evaluate(X_train, Y_train, verbose=False)
 print("Training Accuracy: {:.4f}".format(accuracy))
 loss, accuracy = model.evaluate(X_test, Y_test, verbose=False)
 print("Testing Accuracy:  {:.4f}".format(accuracy))
-
-
-
-if __name__ == "__main__":
-    print(data_split(df))
-
-
-
-
