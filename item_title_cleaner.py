@@ -1,6 +1,12 @@
 
 # coding: utf-8
 
+# In[30]:
+
+
+
+# coding: utf-8
+
 # In[26]:
 
 
@@ -20,7 +26,6 @@ def clean_item_data():
     and preventing the removing of '7.5mm', except ", ', and space. 
     Æ stays, might remove later
     
-    Still need to remove . after oz
     '''
     
     for index, row in df.iterrows():
@@ -29,6 +34,14 @@ def clean_item_data():
             item = ''.join(c for c in item if c.isalnum() or c == '\"' or c == '\'' or c == ' ' or c == '.' or c == '$')
             
             new_string += item
+        word_list = new_string.split()
+        new_word = ''
+        for w in word_list:
+            if w.endswith('.'):
+                new_word += w[:-1] + ' '
+            else:
+                new_word += w + ' '
+        new_string = new_word
         df.at[index, 'item_title']= new_string
     return df
 
