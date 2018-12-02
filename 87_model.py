@@ -15,7 +15,7 @@ import data_cleaner as dc
 import model_helper as mh
 
 df = dc.clean_item_data(0)
-df = dc.cleanup_categoryid(df)
+df = dc.cleanup_categoryid(df)[0]
 
 # vectorize training input data
 _X_train, _, _X_test, Y_train, _, Y_test = dc.data_split(df, 0.8, 0, 0.2)
@@ -59,4 +59,4 @@ loss, accuracy = model.evaluate(X_test, Y_test, verbose=False)
 print("Testing Accuracy:  {:.4f}".format(accuracy))
 mh.plot_history(history)
 
-
+plt.show()
