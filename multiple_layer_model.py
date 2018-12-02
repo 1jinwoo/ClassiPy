@@ -12,7 +12,7 @@ df = dc.cleanup_categoryid(df)
 
 # vectorize training input data
 _X_train, _X_valid, _X_test, Y_train, Y_valid, Y_test = dc.data_split(df, 0.65, 0.15, 0.20)
-vectorizer = CountVectorizer()
+vectorizer = CountVectorizer(encoding='latin1') # Allow different options (min_df, encoding)
 
 # convert pandas dataframes to list of strings
 x_train_list = []
@@ -35,7 +35,7 @@ print('X train shape: ' + str(X_train.shape[1]))
 input_dim = X_train.shape[1] # Number of features
 output_dim = df['categoryId'].nunique()
 model = Sequential()
-model.add(layers.Dense(300, input_dim=input_dim, activation='relu', use_bias=False))
+model.add(layers.Dense(330, input_dim=input_dim, activation='relu', use_bias=False))
 model.add(layers.Dropout(rate=0.6))
 # model.add(layers.Dense(100, activation='relu'))
 model.add(layers.Dropout(rate=0.6))
@@ -44,7 +44,7 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
 history = model.fit(X_train, Y_train,
-                    epochs=4,
+                    epochs=5,
                     verbose=1,
                     validation_data=(X_valid, Y_valid),
                     batch_size=10)
