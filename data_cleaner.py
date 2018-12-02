@@ -86,14 +86,20 @@ def data_split(df, train=0.65, valid=0.15, test=0.20):
     """
 
     # instantiate variables
-    column_headers = list(df.columns.values)
+    # column_headers = list(df.columns.values)
+
+    if train == 1:
+        x_df = df['item_title']
+        y_df = df['categoryId']
+        return x_df, y_df
+
     X_train = pd.DataFrame()
     X_valid = pd.DataFrame()
     X_test = pd.DataFrame()
     Y_train = pd.DataFrame()
     Y_valid = pd.DataFrame()
     Y_test = pd.DataFrame()
-    
+
     id_num = df['categoryId'].nunique()
     for i in range(1, id_num+1):
         x_category_df = df.loc[df['categoryId'] == i]['item_title']
