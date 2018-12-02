@@ -32,7 +32,8 @@ def cleanup_categoryid(df):
             df.at[j, 'categoryId'] = i
         else:
             df.at[j, 'categoryId'] = i
-    return df
+    result = [df, category_dict]
+    return result
 
 def clean_item_data(m):
     #read in file using data_cleaner
