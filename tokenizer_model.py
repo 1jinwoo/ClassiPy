@@ -39,21 +39,21 @@ X_train = pad_sequences(X_train, padding='post', maxlen=maxlen)
 X_valid = pad_sequences(X_valid, padding='post', maxlen=maxlen)
 X_test = pad_sequences(X_test, padding='post', maxlen=maxlen)
 
-print(X_train)
-
 embedding_dim = 50
+'''
 embedding_matrix = mh.create_embedding_matrix(
     'glove.6B/glove.6B.50d.txt',
     tokenizer.word_index, embedding_dim)
+'''
 output_dim = df['categoryId'].nunique()
 model = Sequential()
 model.add(layers.Embedding(input_dim=vocab_size,
                            output_dim=embedding_dim,
-                           weights=[embedding_matrix], # comment/uncomment to use/ignore glove.6B
+                           # weights=[embedding_matrix], # comment/uncomment to use/ignore glove.6B
                            input_length=maxlen))
-model.add(layers.Conv1D(128, 2, activation='relu')) # CNN needs GlobalMaxPool
+# model.add(layers.Conv1D(128, 2, activation='relu')) # CNN needs GlobalMaxPool
 model.add(layers.LSTM(units=150, dropout=0.6)) # Cannot use this with GlobalMaxPool
-model.add(layers.GlobalMaxPool1D()) # Cannot use this with LSTM
+# model.add(layers.GlobalMaxPool1D()) # Cannot use this with LSTM
 model.add(layers.Dense(300, activation='relu'))
 model.add(layers.Dropout(0.6))
 model.add(layers.Dense(output_dim, activation='softmax'))
@@ -61,10 +61,10 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 history = model.fit(X_train, Y_train,
-                    epochs=12,
+                    epochs=30,
                     verbose=1,
                     validation_data=(X_valid, Y_valid),
-                    batch_size=50)
+                    batch_size=10)
 model.summary()
 
 loss, accuracy = model.evaluate(X_train, Y_train, verbose=False)
