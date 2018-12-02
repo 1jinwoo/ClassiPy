@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import data_cleaner as dc
 import model_helper as mh
 
-df = dc.clean_item_data()
+df = dc.clean_item_data(0)
 df = dc.cleanup_categoryid(df)
 
 # vectorize training input data
@@ -32,6 +32,7 @@ input_dim = X_train.shape[1] # Number of features
 output_dim = df['categoryId'].nunique()
 model = Sequential()
 model.add(layers.Dense(100, input_dim=input_dim, activation='relu'))
+model.add(layers.Dropout(0.6))
 model.add(layers.Dense(output_dim, activation='softmax'))
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam',
