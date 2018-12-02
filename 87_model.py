@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Dec  1 19:23:58 2018
+
+@author: Justin Won
+"""
+
 # libraries import
 from keras.models import Sequential
 from keras import layers
@@ -31,7 +38,7 @@ print('X train shape: ' + str(X_train.shape[1]))
 input_dim = X_train.shape[1] # Number of features
 output_dim = df['categoryId'].nunique()
 model = Sequential()
-model.add(layers.Dense(100, input_dim=input_dim, activation='relu', use_bias=True))
+model.add(layers.Dense(400, input_dim=input_dim, activation='relu'))
 model.add(layers.Dropout(rate=0.6))
 # model.add(layers.Dense(100, activation='relu'))
 model.add(layers.Dropout(rate=0.6))
@@ -40,7 +47,7 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
 history = model.fit(X_train, Y_train,
-                    epochs=16,
+                    epochs=4,
                     verbose=1,
                     validation_data=(X_test, Y_test),
                     batch_size=10)
