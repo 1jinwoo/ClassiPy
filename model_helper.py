@@ -9,7 +9,7 @@ import pandas as pd
 
 
 # plot history function
-def plot_history(history, model, train_accuracy, test_accuracy, neurons, dropout_percentage, epoch):
+def plot_history(history, model=None, train_accuracy=None, test_accuracy=None, neurons=None, dropout_percentage=None, epoch=None):
     acc = history.history['acc']
     val_acc = history.history['val_acc']
     loss = history.history['loss']
@@ -25,9 +25,15 @@ def plot_history(history, model, train_accuracy, test_accuracy, neurons, dropout
     plt.subplot(1, 2, 2)
     plt.plot(x, loss, 'b', label='Training loss')
     plt.plot(x, val_loss, 'r', label='Validation loss')
-    plt.title(model+', train accuracy = '+str(train_accuracy)+', test_accuracy = '+str(test_accuracy))
+    if model is not None:
+        plt.title(model+', train accuracy = '+str(train_accuracy)+', test_accuracy = '+str(test_accuracy))
+    else:
+        plt.title('Training and validation loss')
     plt.legend()
-    plt.savefig('images/'+model+'Neurons'+str(neurons)+' Dropout'+str(dropout_percentage)+' Epoch'+str(epoch)+'.jpg')
+    if model is not None:
+        plt.savefig('images/'+model+'Neurons'+str(neurons)+' Dropout'+str(dropout_percentage)+' Epoch'+str(epoch)+'.jpg')
+    else:
+        plt.show()
     plt.close()
 
 
