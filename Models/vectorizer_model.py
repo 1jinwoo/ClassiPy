@@ -8,7 +8,7 @@ import data_cleaner as dc
 import model_helper as mh
 
 df = dc.clean_item_data(0)
-df = dc.cleanup_categoryid(df)
+df = dc.cleanup_categoryid(df)[0]
 
 # vectorize training input data
 _X_train, _X_valid, _X_test, Y_train, Y_valid, Y_test = dc.data_split(df, 0.65, 0.15, 0.2)

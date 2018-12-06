@@ -8,8 +8,8 @@ from keras import layers
 import data_cleaner as dc
 import model_helper as mh
 
-df = dc.clean_item_data()
-df = dc.cleanup_categoryid(df)
+df = dc.clean_item_data(0)
+df = dc.cleanup_categoryid(df)[0]
 _X_train, _, _X_test, Y_train, _, Y_test = dc.data_split(df, 0.8, 0, 0.2)
 
 

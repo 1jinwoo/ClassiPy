@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-def read_search_strings(file_path='search_strings.csv'):
+def read_search_strings(file_path='../search_strings.csv'):
     '''
     Reads from csv from file_path
     :return: pandas DataFrame of the csv
